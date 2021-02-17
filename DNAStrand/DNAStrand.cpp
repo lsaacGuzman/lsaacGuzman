@@ -115,13 +115,13 @@ DNAStrand DNAStrand::getComplement() const{
             complement.bases[i] = 'C';
         }
 
-        //        switch(bases[i])
-        //        {
-        //        case 'A': complement.bases[i] = 'T';
-        //        case 'T': complement.bases[i] = 'A';
-        //        case 'C': complement.bases[i] = 'G';
-        //        case 'G': complement.bases[i] = 'C';
-        //        }
+//                switch(bases[i])
+//                {
+//                case 'A': complement.bases[i] = 'T';
+//                case 'T': complement.bases[i] = 'A';
+//                case 'C': complement.bases[i] = 'G';
+//                case 'G': complement.bases[i] = 'C';
+//                }
 
     }
     return complement;
@@ -129,7 +129,7 @@ DNAStrand DNAStrand::getComplement() const{
 }
 
 DNAStrand DNAStrand::substr(int start, int length)const{
-    if (start < 0 || length < 0 || (start+length) >= this->length){
+    if (start < 0 || length < 0 || (start+length) > this->length){
         throw std::out_of_range ("Substring is invalid");
     }
     DNAStrand SubString(length);
