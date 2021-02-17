@@ -15,14 +15,10 @@ DNAStrand::DNAStrand(int length){
 }
 
 DNAStrand::DNAStrand(const char* startingString){
-    for (size_t i = 0; i < strlen(startingString); i++){
-        if(startingString[i] != 'A' && startingString[i] != 'C' && startingString[i] != 'G' && startingString[i] != 'T')
-
-            throw std::logic_error("Invalid DNA Strand");
-        this->length = static_cast<int>(strlen(startingString));
-        this->bases = new char[length];
-                strcpy(bases,startingString);
-//        bases[length] = startingString[length];
+    this->length = static_cast<int>(strlen(startingString));
+    this->bases = new char[length];
+    for (int i = 0;i<length;i++){
+        bases[i] = startingString[i];
     }
 
 }
@@ -84,17 +80,17 @@ char DNAStrand::operator[](int index)const{
 
 DNAStrand DNAStrand::operator+(const DNAStrand& other) const{
 
-
+    int counter = 0;
     DNAStrand combo(this->getLength()+ other.getLength());
-    combo.bases[length] = bases[this->length]+other.bases[other.getLength()];
 
-//    for (int i = 0; i<this->getLength(); i++){
-//        combo.bases[i] = *bases;
 
-//    }
-//    for (int i = 0; i<other.getLength(); i++){
-//        combo.bases[i] = other.bases[i];
-//    }
+    for (int i = 0; i<this->getLength(); i++,counter++){
+        combo.bases[counter] = bases[i];
+
+    }
+    for (int i = 0; i<other.getLength(); i++,counter++){
+        combo.bases[counter] = other.bases[i];
+    }
 
     return combo;
 }
@@ -134,13 +130,12 @@ DNAStrand DNAStrand::getComplement() const{
 
 DNAStrand DNAStrand::substr(int start, int length)const{
     if (start < 0 || length < 0 || (start+length) >= this->length){
-        throw std::out_of_range ("Substring not possible");
+        throw std::out_of_range ("Substring is invalid");
     }
-
-
     DNAStrand SubString(length);
-    for (int i = 0; i < length; i++){
-        SubString.bases[i] = bases[i+start];
+    int counter = start;
+    for (int i = 0; i < length; i++,counter++){
+        SubString.bases[i] = this->bases[counter];
     }
 
     return SubString;
@@ -148,12 +143,12 @@ DNAStrand DNAStrand::substr(int start, int length)const{
 }
 std::ostream& operator<<(std::ostream& dest, const DNAStrand& source){
 
-    dest <<"(";
+
 
     for (int i = 0; i <source.getLength();i++){
-        cout << ",";
+        dest << source.bases[i];
     }
-    dest << ")";
+
     return dest;
 
 }
